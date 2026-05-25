@@ -84,9 +84,18 @@ const show = (request, response) => {
 };
 
 const store = (request, response) => {
+    console.log(request.body);
+    const { title, content } = request.body;
+
     response.json({
         error: null,
-        results: 'Creare un nuovo elemento'
+        results: {
+            "messaggio": "Stai provando a creare dei dati",
+            "dati": {
+                "title": title,
+                "content": content
+            }
+        }
     })
 }
 

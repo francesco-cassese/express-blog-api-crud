@@ -2,6 +2,7 @@ import express from 'express';
 import postsRouter from './routers/postsRouters.js';
 
 const app = express();
+app.use(express.json());
 
 const SERVER_PORT = process.env.SERVER_PORT || 3000;
 
