@@ -87,7 +87,7 @@ const store = (request, response) => {
     console.log(request.body);
     const { title, content } = request.body;
 
-    response.json({
+    response.status(201).json({
         error: null,
         results: {
             "messaggio": "Stai provando a creare dei dati",
