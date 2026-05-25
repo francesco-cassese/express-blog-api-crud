@@ -10,19 +10,19 @@ const index = (request, response) => {
         return;
     }
 
-    if (!isNaN(name)) {
-        response.status(400).json({
-            error: "il nome non può essere un numero",
-            results: null
-        })
-        return;
-    }
-
     const cleanName = name.trim().toLowerCase();
 
     if (cleanName === "") {
         response.status(400).json({
             error: `name non può essere vuoto.`,
+            results: null
+        })
+        return;
+    }
+
+    if (!isNaN(name)) {
+        response.status(400).json({
+            error: "il nome non può essere un numero",
             results: null
         })
         return;
