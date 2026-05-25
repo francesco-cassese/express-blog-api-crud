@@ -15,6 +15,7 @@ const index = (request, response) => {
             error: "il nome non può essere un numero",
             results: null
         })
+        return;
     }
 
     const cleanName = name.trim().toLowerCase();
