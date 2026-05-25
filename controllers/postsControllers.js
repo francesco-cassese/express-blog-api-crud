@@ -35,14 +35,12 @@ const index = (request, response) => {
     }
 
     const postsFiltered = posts.filter(post => {
-        console.log("Post in esame:", post.title, "Tempo:", post.prep_time);
         if (name) {
             const cleanName = name.trim().toLowerCase();
             if (!post.title.toLowerCase().includes(cleanName)) return false;
         }
 
         if (!isNaN(prepTimeLimit)) {
-            console.log("Confronto:", post.prep_time, ">", prepTimeLimit);
             if (post.prep_time > prepTimeLimit) return false;
         }
 
