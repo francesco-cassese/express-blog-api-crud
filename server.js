@@ -14,7 +14,7 @@ app.get('/', (request, response) => {
 })
 
 /*http://localhost:3000/posts*/
-app.get('/posts', postsRouter);
+app.use('/posts', postsRouter);
 
 app.listen(SERVER_PORT, (error) => {
 
