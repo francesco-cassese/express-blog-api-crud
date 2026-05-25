@@ -105,12 +105,12 @@ const destroy = (request, response) => {
 
     const deletedPost = deletePost(posts, resultsCheckedId.results)
 
-    if (!deletedPost) {
-        response.json(deletedPost.error)
-        return
+    if (deletedPost.error) {
+        response.status(404).json(deletedPost.error)
+        return;
     }
 
-    response.json(deletedPost);
+    response.sendStatus(204);
     console.log(posts);
 }
 
