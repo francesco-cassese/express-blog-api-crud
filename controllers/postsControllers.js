@@ -3,7 +3,36 @@ import { validateId, checkPosts, deletePost } from '../utils/serverUtils.js'
 
 
 const index = (request, response) => {
-    response.json(posts)
+    const { name } = request.query;
+
+    if (!name) {
+        response.json(posts)
+        return;
+    }
+
+    const cleanName = name.trim();
+
+    if (cleanName === "") {
+        response.status(400).json({
+            error: `il formato di ${name} non è conforme`,
+            results: null
+        })
+    }
+
+    const postsFiltered = posts.filter(post => {
+        return post.title.includes(cleanName)
+    })
+
+    if (postsFiltered.length === 0) {
+        return response.status(404).json(
+            {
+                error: "Nessun post trovato",
+                results: null
+            });
+    }
+
+    response.json(postsFiltered);
+
 }
 
 const show = (request, response) => {
