@@ -10,17 +10,25 @@ const index = (request, response) => {
         return;
     }
 
-    const cleanName = name.trim();
-
-    if (cleanName === "") {
+    if (!isNaN(name)) {
         response.status(400).json({
-            error: `il formato di ${name} non è conforme`,
+            error: "il nome non può essere un numero",
             results: null
         })
     }
 
+    const cleanName = name.trim().toLowerCase();
+
+    if (cleanName === "") {
+        response.status(400).json({
+            error: `name non può essere vuoto.`,
+            results: null
+        })
+        return;
+    }
+
     const postsFiltered = posts.filter(post => {
-        return post.title.includes(cleanName)
+        return post.title.toLocaleLowerCase().includes(cleanName)
     })
 
     if (postsFiltered.length === 0) {
