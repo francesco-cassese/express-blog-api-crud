@@ -1,5 +1,5 @@
 import posts from '../data/posts.js';
-import { validateId, checkPosts } from '../utils/serverUtils.js'
+import { validateId, checkPosts, deletePost } from '../utils/serverUtils.js'
 
 
 const index = (request, response) => {
@@ -12,18 +12,18 @@ const show = (request, response) => {
     const checkedId = validateId(id);
 
     if (checkedId.error) {
-        return response.status(400)
+        response.status(400)
             .json(checkedId);
     }
 
     const postFound = checkPosts(posts, checkedId.results);
 
     if (postFound.error) {
-        return response.status(404)
+        response.status(404)
             .json(postFound);
     }
 
-    return response.json({
+    response.json({
         error: null,
         results: postFound.results
     });
@@ -42,14 +42,14 @@ const update = (request, response) => {
     const checkedId = validateId(id);
 
     if (checkedId.error) {
-        return response.status(400)
+        response.status(400)
             .json(checkedId);
     }
 
     const postFound = checkPosts(posts, checkedId.results);
 
     if (postFound.error) {
-        return response.status(404)
+        response.status(404)
             .json(postFound);
     }
 
@@ -63,23 +63,23 @@ const modify = (request, response) => {
 
     const { id } = request.params;
 
-    const checkedId = validateId(id);
+    const resultscheckedId = validateId(id);
 
-    if (checkedId.error) {
-        return response.status(400)
-            .json(checkedId);
+    if (resultscheckedId.error) {
+        response.status(400)
+            .json(resultscheckedId);
     }
 
-    const postFound = checkPosts(posts, checkedId.results);
+    const resultsPostFound = checkPosts(posts, resultscheckedId.results);
 
-    if (postFound.error) {
-        return response.status(404)
-            .json(postFound);
+    if (resultsPostFound.error) {
+        response.status(404)
+            .json(resultsPostFound);
     }
 
     response.json({
         error: null,
-        results: `Modificare parzialmente l'elemento ${checkedId.results}`
+        results: `Modificare parzialmente l'elemento ${resultscheckedId.results}`
     })
 }
 
@@ -87,24 +87,31 @@ const destroy = (request, response) => {
 
     const { id } = request.params;
 
-    const checkedId = validateId(id);
+    const resultsCheckedId = validateId(id);
 
-    if (checkedId.error) {
-        return response.status(400)
-            .json(checkedId);
+    if (resultsCheckedId.error) {
+        response.status(400)
+            .json(resultsCheckedId);
+        return;
     }
 
-    const results = checkPosts(posts, checkedId.results);
+    const resultsPostFound = checkPosts(posts, resultsCheckedId.results);
 
-    if (results.error) {
-        return response.status(404)
-            .json(results);
+    if (resultsPostFound.error) {
+        response.status(404)
+            .json(resultsPostFound);
+        return;
     }
 
-    response.json({
-        error: null,
-        results: `Vuoi eliminare l'elemento con id ${checkedId.results}`
-    })
+    const deletedPost = deletePost(posts, resultsCheckedId.results)
+
+    if (!deletedPost) {
+        response.json(deletedPost.error)
+        return
+    }
+
+    response.json(deletedPost);
+    console.log(posts);
 }
 
 export { index, show, store, update, modify, destroy }

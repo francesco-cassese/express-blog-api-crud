@@ -53,4 +53,22 @@ const checkPosts = (posts, id) => {
     };
 };
 
-export { validateId, checkPosts };
+const deletePost = (posts, id) => {
+    const indexOfPosts = posts.findIndex(post => post.id === id);
+
+    if (indexOfPosts === -1) {
+        return {
+            error: `Post con ID ${id} non trovato`,
+            results: null
+        };
+    }
+
+    const removedPost = posts.splice(indexOfPosts, 1);
+
+    return {
+        error: null,
+        results: `rimozione di ${removedPost[0].title} avvenuta con successo`
+    };
+};
+
+export { validateId, checkPosts, deletePost };
