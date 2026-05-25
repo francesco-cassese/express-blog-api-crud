@@ -3,46 +3,62 @@ import { validateId, checkPosts, deletePost } from '../utils/serverUtils.js'
 
 
 const index = (request, response) => {
-    const { name } = request.query;
+    const { name, prep_time: prepTime } = request.query;
 
-    if (!name) {
-        response.json(posts)
-        return;
+    const prepTimeLimit = parseInt(prepTime);
+
+    if (name) {
+        const cleanName = name.trim();
+
+        if (cleanName === "") {
+            response.status(400).json({
+                error: "Il nome non può essere vuoto",
+                results: null
+            });
+            return;
+        }
+
+        if (!isNaN(cleanName)) {
+            response.status(400).json({
+                error: "Il nome non può essere un numero",
+                results: null
+            });
+            return;
+        }
     }
 
-    const cleanName = name.trim().toLowerCase();
-
-    if (cleanName === "") {
-        response.status(400).json({
-            error: `name non può essere vuoto.`,
+    if (prepTime && isNaN(prepTimeLimit)) {
+        return response.status(400).json({
+            error: "Il tempo di preparazione deve essere un numero",
             results: null
-        })
-        return;
-    }
-
-    if (!isNaN(name)) {
-        response.status(400).json({
-            error: "il nome non può essere un numero",
-            results: null
-        })
-        return;
+        });
     }
 
     const postsFiltered = posts.filter(post => {
-        return post.title.toLocaleLowerCase().includes(cleanName)
-    })
+        console.log("Post in esame:", post.title, "Tempo:", post.prep_time);
+        if (name) {
+            const cleanName = name.trim().toLowerCase();
+            if (!post.title.toLowerCase().includes(cleanName)) return false;
+        }
+
+        if (!isNaN(prepTimeLimit)) {
+            console.log("Confronto:", post.prep_time, ">", prepTimeLimit);
+            if (post.prep_time > prepTimeLimit) return false;
+        }
+
+        return true;
+    });
 
     if (postsFiltered.length === 0) {
-        return response.status(404).json(
-            {
-                error: "Nessun post trovato",
-                results: null
-            });
+        response.status(404).json({
+            error: "Nessun post trovato",
+            results: null
+        })
+        return;
     }
 
     response.json(postsFiltered);
-
-}
+};
 
 const show = (request, response) => {
     const { id } = request.params;
