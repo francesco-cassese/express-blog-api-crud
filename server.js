@@ -9,7 +9,11 @@ app.use(express.static('public', {
     index: false
 }));
 
-app.use('/posts', postsRouter);
+app.get('/', (request, response) => {
+    response.send('<h1>Benvenuti</h1>')
+})
+
+app.get('/posts', postsRouter);
 
 app.listen(SERVER_PORT, (error) => {
 
