@@ -9,10 +9,10 @@ const index = (request, response) => {
 const show = (request, response) => {
     const { id } = request.params;
 
-    const checkedId = checkId(id);
+    const checkedId = validateId(id);
 
     if (checkedId.error) {
-        return response.status(404)
+        return response.status(400)
             .json(checkedId);
     }
 
@@ -39,10 +39,10 @@ const store = (request, response) => {
 const update = (request, response) => {
     const { id } = request.params;
 
-    const checkedId = checkId(id);
+    const checkedId = validateId(id);
 
     if (checkedId.error) {
-        return response.status(404)
+        return response.status(400)
             .json(checkedId);
     }
 
@@ -63,10 +63,10 @@ const modify = (request, response) => {
 
     const { id } = request.params;
 
-    const checkedId = checkId(id);
+    const checkedId = validateId(id);
 
     if (checkedId.error) {
-        return response.status(404)
+        return response.status(400)
             .json(checkedId);
     }
 
@@ -87,10 +87,10 @@ const destroy = (request, response) => {
 
     const { id } = request.params;
 
-    const checkedId = checkId(id);
+    const checkedId = validateId(id);
 
     if (checkedId.error) {
-        return response.status(404)
+        return response.status(400)
             .json(checkedId);
     }
 

@@ -13,6 +13,7 @@ app.get('/', (request, response) => {
     response.send('<h1>Benvenuti</h1>')
 })
 
+/*http://localhost:3000/posts*/
 app.get('/posts', postsRouter);
 
 app.listen(SERVER_PORT, (error) => {
