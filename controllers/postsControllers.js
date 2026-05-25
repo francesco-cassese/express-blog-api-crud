@@ -94,11 +94,11 @@ const destroy = (request, response) => {
             .json(checkedId);
     }
 
-    const postFound = checkPosts(posts, checkedId.results);
+    const results = checkPosts(posts, checkedId.results);
 
-    if (postFound.error) {
+    if (results.error) {
         return response.status(404)
-            .json(postFound);
+            .json(results);
     }
 
     response.json({
