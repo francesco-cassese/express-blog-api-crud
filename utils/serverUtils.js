@@ -1,3 +1,5 @@
+import posts from "../data/posts";
+
 const validateId = id => {
 
     if (!id) {
@@ -118,7 +120,16 @@ const createSlug = (title) => {
     const cleanTitle = title.trim().toLowerCase()
     const slug = cleanTitle.replace(/\s+/g, "-") // \s+: Trova uno o più spazi bianchi consecutivi e g: sostituisce tutte le occorrenze non solo la prima.
 
-    return slug;
+
+
+    let contatore = 0
+    let newSlug = slug;
+
+    while (posts.find(post => { return post.slug === newSlug; })) {
+        newSlug = `${newSlug}-${contatore}`
+        contatore++;
+    }
+    return newSlug;
 }
 
 const checkPostsBySlug = (posts, slug) => {
