@@ -1,9 +1,9 @@
 import posts from '../data/posts.js';
-import { validateId, checkPosts, deletePost, validatePostData, createSlug } from '../utils/serverUtils.js'
+import { validateId, checkPosts, deletePost, validatePostData, createSlug, checkPostsBySlug } from '../utils/serverUtils.js'
 
 
 const index = (request, response) => {
-    const { name, prep_time: prepTime } = request.query;
+    const { name, prep_time: prepTime, slug } = request.query;
 
     const prepTimeLimit = parseInt(prepTime);
 
@@ -59,23 +59,16 @@ const index = (request, response) => {
 };
 
 const show = (request, response) => {
-    const { id } = request.params;
 
-    const checkedId = validateId(id);
+    const { slug } = request.params;
 
-    if (checkedId.error) {
-        response.status(400)
-            .json(checkedId);
-    }
-
-    const postFound = checkPosts(posts, checkedId.results);
+    const postFound = checkPostsBySlug(posts, slug);
 
     if (postFound.error) {
-        response.status(404)
-            .json(postFound);
+        return response.status(404).json(postFound);
     }
 
-    response.json({
+    response.status(200).json({
         error: null,
         results: postFound.results
     });

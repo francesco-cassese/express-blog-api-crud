@@ -110,13 +110,31 @@ const validatePostData = (data, posts) => {
     };
 }
 
-const createSlug = ({ title }) => {
+const createSlug = (title) => {
     if (!title || typeof title !== 'string') {
         return "";
-        const cleanTitle = title.trim().toLowerCase()
-        const slug = cleanTitle.replace(/\s+/g, "-") // \s+: Trova uno o più spazi bianchi consecutivi e g: sostituisce tutte le occorrenze non solo la prima.
     }
+
+    const cleanTitle = title.trim().toLowerCase()
+    const slug = cleanTitle.replace(/\s+/g, "-") // \s+: Trova uno o più spazi bianchi consecutivi e g: sostituisce tutte le occorrenze non solo la prima.
+
     return slug;
 }
 
-export { validateId, checkPosts, deletePost, validatePostData, createSlug };
+const checkPostsBySlug = (posts, slug) => {
+    const postFound = posts.find(post => post.slug === slug.trim());
+
+    if (!postFound) {
+        return {
+            error: `Post '${slug}' non trovato`,
+            results: null
+        };
+    }
+
+    return {
+        error: null,
+        results: postFound
+    };
+};
+
+export { validateId, checkPosts, deletePost, validatePostData, createSlug, checkPostsBySlug };

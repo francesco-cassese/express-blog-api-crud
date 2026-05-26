@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/', index);
 
 /* http://localhost:3000/:id */
-router.get('/:id', show);
+router.get('/:slug', show);
 
 /* http://localhost:3000 */
 router.post('/', store)
