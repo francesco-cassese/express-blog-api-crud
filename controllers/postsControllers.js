@@ -1,7 +1,11 @@
 import posts from '../data/posts.js';
 import { validateId, checkPosts, deletePost, validatePostData, createSlug, checkPostsBySlug } from '../utils/serverUtils.js'
 
-
+/*
+   ============================================================
+   INDEX (GET)
+   ============================================================
+ */
 const index = (request, response) => {
     const { name, prep_time: prepTime, slug } = request.query;
 
@@ -58,6 +62,12 @@ const index = (request, response) => {
     response.json(postsFiltered);
 };
 
+/*
+   ============================================================
+   SHOW (GET/:slug)
+   ============================================================
+ */
+
 const show = (request, response) => {
 
     const { slug } = request.params;
@@ -73,6 +83,12 @@ const show = (request, response) => {
         results: postFound.results
     });
 };
+
+/*
+   ============================================================
+   STORE (POST)
+   ============================================================
+ */
 
 const store = (request, response) => {
     console.log(request.body);
@@ -107,6 +123,12 @@ const store = (request, response) => {
     })
 }
 
+/*
+   ============================================================
+   UPDATE (PUT/:id)
+   ============================================================
+ */
+
 const update = (request, response) => {
     const { id } = request.params;
 
@@ -129,6 +151,12 @@ const update = (request, response) => {
         results: `Modificare iteramente l'elemento ${checkedId.results}`
     })
 }
+
+/*
+   ============================================================
+   MODIFY (PATCH:id)
+   ============================================================
+ */
 
 const modify = (request, response) => {
 
@@ -170,6 +198,12 @@ const modify = (request, response) => {
         results: modificatedPost
     });
 }
+
+/*
+   ============================================================
+   DESTROY (DELETE/:id)
+   ============================================================
+ */
 
 const destroy = (request, response) => {
 
