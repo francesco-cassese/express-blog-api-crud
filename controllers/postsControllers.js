@@ -1,5 +1,5 @@
 import posts from '../data/posts.js';
-import { validateId, checkPosts, deletePost, validatePostData } from '../utils/serverUtils.js'
+import { validateId, checkPosts, deletePost, validatePostData, createSlug } from '../utils/serverUtils.js'
 
 
 const index = (request, response) => {
@@ -83,7 +83,7 @@ const show = (request, response) => {
 
 const store = (request, response) => {
     console.log(request.body);
-    const { title, content, image, tags, slug, published, prep_time, } = request.body;
+    const { title, content, published, prep_time, } = request.body;
 
     const resultsValidateData = validatePostData(request.body, posts);
 
@@ -94,9 +94,12 @@ const store = (request, response) => {
 
     const newId = posts.length + 1;
 
+    const slug = createSlug({ title })
+
     const newPost = {
         id: newId,
         ...request.body,
+        slug: slug,
         created_at: new Date().toISOString()
     }
 

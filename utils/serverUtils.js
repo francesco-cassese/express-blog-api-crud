@@ -110,4 +110,10 @@ const validatePostData = (data, posts) => {
     };
 }
 
-export { validateId, checkPosts, deletePost, validatePostData };
+const createSlug = ({ title }) => {
+    const cleanTitle = title.trim().toLowerCase()
+    const slug = cleanTitle.replace(/\s+/g, "-") // \s+: Trova uno o più spazi bianchi consecutivi e g: sostituisce tutte le occorrenze non solo la prima.
+    return slug;
+}
+
+export { validateId, checkPosts, deletePost, validatePostData, createSlug };
