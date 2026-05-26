@@ -140,6 +140,7 @@ const update = (request, response) => {
 const modify = (request, response) => {
 
     const { id } = request.params;
+    const { title, content, tags, prep_time } = request.body;
 
     const resultscheckedId = validateId(id);
 
@@ -155,10 +156,26 @@ const modify = (request, response) => {
             .json(resultsPostFound);
     }
 
-    response.json({
+    const oldPost = resultsPostFound.results;
+    const body = request.body;
+
+    const modificatedPost = {
+        ...oldPost,
+        title: body.title || oldPost.title,
+        content: body.content || oldPost.content,
+        tags: body.tags || oldPost.tags,
+        prep_time: body.prep_time || oldPost.prep_time,
+        slug: body.title ? createSlug(body.title) : oldPost.slug,
+        updated_at: new Date().toISOString()
+    };
+
+    const index = posts.findIndex(p => p.id === oldPost.id);
+    posts[index] = modificatedPost;
+
+    response.status(200).json({
         error: null,
-        results: `Modificare parzialmente l'elemento ${resultscheckedId.results}`
-    })
+        results: modificatedPost
+    });
 }
 
 const destroy = (request, response) => {
