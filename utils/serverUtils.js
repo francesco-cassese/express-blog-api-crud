@@ -71,12 +71,20 @@ const deletePost = (posts, id) => {
     };
 };
 
-const validatePostData = data => {
+const validatePostData = (data, posts) => {
     const { title, content, prep_time, } = data;
 
     if (!title || title.trim() === "") {
         return {
             error: "Il titolo è obbligatorio",
+            results: null
+        };
+    }
+
+    const postEsistente = posts.find(post => post.title.toLowerCase() === title.toLowerCase());
+    if (postEsistente) {
+        return {
+            error: "Esiste già un post con questo titolo",
             results: null
         };
     }

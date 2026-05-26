@@ -85,7 +85,7 @@ const store = (request, response) => {
     console.log(request.body);
     const { title, content, image, tags, slug, published, prep_time, } = request.body;
 
-    const resultsValidateData = validatePostData(request.body);
+    const resultsValidateData = validatePostData(request.body, posts);
 
     if (resultsValidateData.error) {
         response.status(400).json(resultsValidateData);
@@ -105,7 +105,7 @@ const store = (request, response) => {
     response.status(201).json({
         error: null,
         results: {
-            "messaggio": "Stai provando a creare dei dati",
+            "messaggio": "post aggiunto con successo",
             "dati": { newPost }
         }
     })
