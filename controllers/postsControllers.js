@@ -83,16 +83,21 @@ const show = (request, response) => {
 
 const store = (request, response) => {
     console.log(request.body);
-    const { title, content } = request.body;
+    const { title, content, image, tags, slug, published, prep_time, } = request.body;
+
+    const newId = posts.length + 1;
+
+    const newPost = {
+        id: newId,
+        ...request.body,
+        created_at: new Date().toISOString()
+    }
 
     response.status(201).json({
         error: null,
         results: {
             "messaggio": "Stai provando a creare dei dati",
-            "dati": {
-                "title": title,
-                "content": content
-            }
+            "dati": { newPost }
         }
     })
 }
