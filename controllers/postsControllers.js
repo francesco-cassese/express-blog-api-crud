@@ -1,5 +1,5 @@
 import posts from '../data/posts.js';
-import { validateId, checkPosts, deletePost } from '../utils/serverUtils.js'
+import { validateId, checkPosts, deletePost, validatePostData } from '../utils/serverUtils.js'
 
 
 const index = (request, response) => {
@@ -85,6 +85,13 @@ const store = (request, response) => {
     console.log(request.body);
     const { title, content, image, tags, slug, published, prep_time, } = request.body;
 
+    const resultsValidateData = validatePostData(request.body);
+
+    if (resultsValidateData.error) {
+        response.status(400).json(resultsValidateData);
+        return;
+    }
+
     const newId = posts.length + 1;
 
     const newPost = {
@@ -92,6 +99,8 @@ const store = (request, response) => {
         ...request.body,
         created_at: new Date().toISOString()
     }
+
+    posts.push(newPost);
 
     response.status(201).json({
         error: null,

@@ -71,4 +71,35 @@ const deletePost = (posts, id) => {
     };
 };
 
-export { validateId, checkPosts, deletePost };
+const validatePostData = data => {
+    const { title, content, prep_time, } = data;
+
+    if (!title || title.trim() === "") {
+        return {
+            error: "Il titolo è obbligatorio",
+            results: null
+        };
+    }
+
+    if (!content || content.trim() === "") {
+        return {
+            error: "Il contenuto è obbligatorio",
+            results: null
+        };
+    }
+
+    const numPrepTime = Number(prep_time);
+    if (isNaN(numPrepTime) || numPrepTime < 0) {
+        return {
+            error: "Il tempo di preparazione deve essere un numero positivo",
+            results: null
+        };
+    }
+
+    return {
+        error: null,
+        results: { ...data, prep_time: numPrepTime }
+    };
+}
+
+export { validateId, checkPosts, deletePost, validatePostData };
