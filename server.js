@@ -1,5 +1,6 @@
 import express from 'express';
 import postsRouter from './routers/postsRouters.js';
+import notFound from './middlewares/notFound.js';
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,8 @@ app.get('/', (request, response) => {
 
 /*http://localhost:3000/posts*/
 app.use('/posts', postsRouter);
+
+app.use(notFound);
 
 app.listen(SERVER_PORT, (error) => {
 
