@@ -1,7 +1,7 @@
 import express from "express";
 import { index, show, store, update, modify, destroy } from '../controllers/postsControllers.js'
-import idValidator from '../middlewares/idValidator.js'
-import postExists from "../middlewares/postExist.js";
+import idValidator from "../middlewares/idValidator.js";
+import postExist from "../middlewares/postExist.js";
 
 const router = express.Router()
 
@@ -15,10 +15,10 @@ router.get('/:slug', show);
 router.post('/', store)
 
 /* http://localhost:3000/:id */
-router.put('/:id', [idValidator, postExists, update])
+router.put('/:id', [idValidator, postExist, update])
 
 /* http://localhost:3000/:id */
-router.patch('/:id', [idValidator, postExists, modify])
+router.patch('/:id', [idValidator, postExist, modify])
 
 /* http://localhost:3000/:id */
 router.delete('/:id', destroy)

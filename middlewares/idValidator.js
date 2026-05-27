@@ -1,4 +1,4 @@
-import { validateId } from "../utils/serverUtils";
+import { validateId } from "../utils/serverUtils.js";
 
 const idValidator = (request, response, next) => {
 

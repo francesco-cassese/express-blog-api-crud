@@ -178,7 +178,8 @@ const modify = (request, response) => {
 
     response.status(200).json({
         error: null,
-        results: modificatedPost
+        message: "Post modificato con successo",
+        results: modificatedPost,
     });
 }
 
