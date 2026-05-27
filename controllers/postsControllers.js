@@ -144,7 +144,7 @@ const update = (request, response) => {
 
     response.status(200).json({
         error: null,
-        messaggio: "Post sostituito con successo",
+        message: "Post sostituito con successo",
         results: updatedPost
     });
 }
@@ -174,7 +174,7 @@ const modify = (request, response) => {
 
     response.status(200).json({
         error: null,
-        messaggio: "Post modificato con successo",
+        message: "Post modificato con successo",
         results: modificatedPost,
     });
 }
