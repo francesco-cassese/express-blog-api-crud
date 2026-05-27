@@ -21,6 +21,6 @@ router.put('/:id', [idValidator, postExist, dataValidator, update])
 router.patch('/:id', [idValidator, postExist, dataValidator, modify])
 
 /* http://localhost:3000/:id */
-router.delete('/:id', destroy)
+router.delete('/:id', [idValidator, postExist], destroy)
 
 export default router

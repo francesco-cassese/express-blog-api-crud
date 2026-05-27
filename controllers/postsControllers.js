@@ -116,11 +116,9 @@ const store = (request, response) => {
 
     response.status(201).json({
         error: null,
-        results: {
-            "messaggio": "post aggiunto con successo",
-            "dati": { newPost }
-        }
-    })
+        message: "Post aggiunto con successo",
+        results: newPost
+    });
 }
 
 /*
@@ -189,14 +187,11 @@ const modify = (request, response) => {
 
 const destroy = (request, response) => {
 
-    const postFound = request.post;
+    const { id } = request.post;
 
-    const deletedPost = deletePost(posts, postFound)
+    const index = posts.findIndex(post => post.id === id);
 
-    if (deletedPost.error) {
-        response.status(404).json(deletedPost.error)
-        return;
-    }
+    posts.splice(index, 1);
 
     response.sendStatus(204);
     console.log(posts);
