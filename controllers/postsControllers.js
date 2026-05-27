@@ -160,24 +160,7 @@ const update = (request, response) => {
 
 const modify = (request, response) => {
 
-    const { id } = request.params;
-    const { title, content, tags, prep_time } = request.body;
-
-    const resultscheckedId = validateId(id);
-
-    if (resultscheckedId.error) {
-        response.status(400)
-            .json(resultscheckedId);
-    }
-
-    const resultsPostFound = checkPosts(posts, resultscheckedId.results);
-
-    if (resultsPostFound.error) {
-        response.status(404)
-            .json(resultsPostFound);
-    }
-
-    const oldPost = resultsPostFound.results;
+    const oldPost = request.post;
     const body = request.body;
 
     const modificatedPost = {
