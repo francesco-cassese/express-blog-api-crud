@@ -130,28 +130,26 @@ const store = (request, response) => {
  */
 
 const update = (request, response) => {
-    const { id } = request.params;
 
-    const checkedId = validateId(id);
+    const oldPost = request.post;
+    const newBody = request.body;
 
-    if (checkedId.error) {
-        response.status(400)
-            .json(checkedId);
-    }
+    const updatedPost = {
+        id: oldPost.id,
+        ...newBody,
+        slug: createSlug(newBody.title),
+        updated_at: new Date().toISOString()
+    };
 
-    const postFound = checkPosts(posts, checkedId.results);
+    const index = posts.findIndex(post => post.id === oldPost.id);
+    posts[index] = updatedPost;
 
-    if (postFound.error) {
-        response.status(404)
-            .json(postFound);
-    }
-
-    response.json({
+    response.status(200).json({
         error: null,
-        results: `Modificare iteramente l'elemento ${checkedId.results}`
-    })
+        messaggio: "Post sostituito con successo",
+        results: updatedPost
+    });
 }
-
 /*
    ============================================================
    MODIFY (PATCH:id)
@@ -173,12 +171,12 @@ const modify = (request, response) => {
         updated_at: new Date().toISOString()
     };
 
-    const index = posts.findIndex(p => p.id === oldPost.id);
+    const index = posts.findIndex(post => post.id === oldPost.id);
     posts[index] = modificatedPost;
 
     response.status(200).json({
         error: null,
-        message: "Post modificato con successo",
+        messaggio: "Post modificato con successo",
         results: modificatedPost,
     });
 }
@@ -191,25 +189,9 @@ const modify = (request, response) => {
 
 const destroy = (request, response) => {
 
-    const { id } = request.params;
+    const postFound = request.post;
 
-    const resultsCheckedId = validateId(id);
-
-    if (resultsCheckedId.error) {
-        response.status(400)
-            .json(resultsCheckedId);
-        return;
-    }
-
-    const resultsPostFound = checkPosts(posts, resultsCheckedId.results);
-
-    if (resultsPostFound.error) {
-        response.status(404)
-            .json(resultsPostFound);
-        return;
-    }
-
-    const deletedPost = deletePost(posts, resultsCheckedId.results)
+    const deletedPost = deletePost(posts, postFound)
 
     if (deletedPost.error) {
         response.status(404).json(deletedPost.error)
