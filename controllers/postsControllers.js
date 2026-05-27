@@ -91,19 +91,19 @@ const show = (request, response) => {
  */
 
 const store = (request, response) => {
-    console.log(request.body);
-    const { title, content, published, prep_time, } = request.body;
 
-    const resultsValidateData = validatePostData(request.body, posts);
+    const validateData = request.body;
+    const { title } = request.body;
 
-    if (resultsValidateData.error) {
-        response.status(400).json(resultsValidateData);
-        return;
+    let newId = 1;
+
+    if (posts.length > 0) {
+        const listaId = posts.map(post => post.id);
+        const maxId = Math.max(...listaId);
+        newId = maxId + 1;
     }
 
-    const newId = posts.length + 1;
-
-    const slug = createSlug({ title })
+    const slug = createSlug(title)
 
     const newPost = {
         id: newId,
