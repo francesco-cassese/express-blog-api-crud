@@ -20,14 +20,15 @@ express-blog-api-crud/
 │   ├── controllers/       # Logica di business
 │   ├── middlewares/       # Validazione e gestione richieste
 │   ├── routers/           # Definizione endpoint API
-│   ├── utils/             # Funzioni di utilità
-│   └──server.js           # Entry point dell'applicazione
+│   └── utils/             # Funzioni di utilità
+│
 ├── .env                   # Variabili d'ambiente (non versionate)
 ├── .env.example           # Template variabili d'ambiente
 ├── .gitignore             # Esclusioni per Git
 ├── package.json           # Dipendenze e script npm
 ├── pnpm-lock.yaml         # Lockfile per le dipendenze
-└── README.md              # Documentazione del progetto
+├── README.md              # Documentazione del progetto
+└── server.js           # Entry point dell'applicazione
 ```
 
 ## 🛠️ Funzionalità implementate
