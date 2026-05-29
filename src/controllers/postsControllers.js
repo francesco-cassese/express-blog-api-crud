@@ -1,5 +1,5 @@
 import posts from '../../data/posts.js';
-import { validateId, checkPosts, deletePost, validatePostData, createSlug, checkPostsBySlug } from '../../utils/serverUtils.js'
+import { validateId, checkPosts, deletePost, validatePostData, createSlug, checkPostsBySlug } from '../utils/serverUtils.js'
 
 /*
    ============================================================

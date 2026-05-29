@@ -1,4 +1,4 @@
-import { checkPosts } from "../../utils/serverUtils.js";
+import { checkPosts } from "../../src/utils/serverUtils.js";
 import posts from "../../data/posts.js";
 
 const postExists = (request, response, next) => {

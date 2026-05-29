@@ -1,4 +1,4 @@
-import posts from "../data/posts.js";
+import posts from "../../data/posts.js";
 
 const validateId = id => {
 

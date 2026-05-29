@@ -1,5 +1,5 @@
 import { validatePostData } from "../utils/serverUtils.js";
-import posts from "../data/posts.js";
+import posts from "../../data/posts.js";
 
 const dataValidator = (request, response, next) => {
 
