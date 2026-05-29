@@ -28,7 +28,7 @@ express-blog-api-crud/
 ├── package.json           # Dipendenze e script npm
 ├── pnpm-lock.yaml         # Lockfile per le dipendenze
 ├── README.md              # Documentazione del progetto
-└── server.js           # Entry point dell'applicazione
+└── server.js              # Entry point dell'applicazione
 ```
 
 ## 🛠️ Funzionalità implementate
