@@ -1,7 +1,7 @@
 import express from 'express';
-import postsRouter from './src/routers/postsRouters.js';
-import notFound from './src/middlewares/notFound.js';
-import globalError from './src/middlewares/globalError.js';
+import postsRouter from './routers/postsRouters.js';
+import notFound from './middlewares/notFound.js';
+import globalError from './middlewares/globalError.js';
 
 const app = express();
 app.use(express.json());
